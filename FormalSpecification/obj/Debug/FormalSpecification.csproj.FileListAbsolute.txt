@@ -1,0 +1,10 @@
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\bin\Debug\FormalSpecification.exe.config
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\bin\Debug\FormalSpecification.exe
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\bin\Debug\FormalSpecification.pdb
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\obj\Debug\FormalSpecification.csprojAssemblyReference.cache
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\obj\Debug\FormalSpecification.Form1.resources
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\obj\Debug\FormalSpecification.Properties.Resources.resources
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\obj\Debug\FormalSpecification.csproj.GenerateResource.cache
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\obj\Debug\FormalSpecification.csproj.CoreCompileInputs.cache
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\obj\Debug\FormalSpecification.exe
+D:\Study\Winform Projects\FormalSpecification\FormalSpecification\obj\Debug\FormalSpecification.pdb
