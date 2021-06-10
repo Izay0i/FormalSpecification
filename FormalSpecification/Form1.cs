@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -122,15 +124,83 @@ namespace FormalSpecification
             return result;
         }
 
+        private void ResetTextBoxes()
+        {
+            rtbInput.Text = rtbOutput.Text = String.Empty;
+        }
+
+        private void OpenFile()
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if (openFileDialog1.OpenFile() != null)
+                {
+                    string fileName = openFileDialog1.FileName;
+                    rtbInput.Text = File.ReadAllText(fileName);
+                }
+            }
+        }
+
         public Form1()
         {
             InitializeComponent();
+
+            openFileDialog1.CheckFileExists = true;
+            openFileDialog1.CheckPathExists = true;
+            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
         }
 
         private void bBuildSolution_Click(object sender, EventArgs e)
         {
             ParseInput(rtbInput.Lines);
             props.Clear();
+        }
+
+        private void rtbInput_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void rtbOutput_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openToolStripButton_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
+        private void newToolStripButton_Click(object sender, EventArgs e)
+        {
+            ResetTextBoxes();
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (String.Compare(e.ClickedItem.Text, "About") == 0)
+            {
+                MessageBox.Show("Formal Specification Interpreter using C#", "About");
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ResetTextBoxes();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Quit?", "Exit", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 }

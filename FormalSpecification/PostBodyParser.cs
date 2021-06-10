@@ -95,7 +95,6 @@ namespace FormalSpecification
             {
                 if (!IsOperator(token))
                 {
-                    Console.WriteLine(token);
                     operandStack.Push(token);
                 }
                 else
