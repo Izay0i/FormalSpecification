@@ -1,0 +1,3 @@
+﻿Max2SoDuong(a: R, b: R) kq: R
+pre ((a > 0) && (b > 0))
+post ((kq = a) && (a >= b)) || ((kq = b) && (b > a))

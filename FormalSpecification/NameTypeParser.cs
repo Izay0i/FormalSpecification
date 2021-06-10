@@ -14,7 +14,8 @@ namespace FormalSpecification
         private Dictionary<string, string> dataTypes = new Dictionary<string, string>()
         {
             { "R", "double" }, //REAL
-            { "N", "int" }, //NUMERIC
+            { "N", "uint" }, //NATURAL
+            { "Z", "int" }, //INTEGER
             { "B", "bool" }, //BOOLEAN
             { "CHAR*", "string" } //CHAR POINTER
         };

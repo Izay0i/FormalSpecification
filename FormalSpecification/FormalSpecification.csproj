@@ -83,5 +83,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Examples\GiaiPhuongTrinhBac1.txt" />
+    <Content Include="Examples\LaNamNhuan.txt" />
+    <Content Include="Examples\Max2So.txt" />
+    <Content Include="Examples\Max2SoDuong.txt" />
+    <Content Include="Examples\XepLoaiHS.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

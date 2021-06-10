@@ -19,7 +19,7 @@ namespace FormalSpecification
             return original;
         }
 
-        public static void ParseCondition(ref string cond)
+        public static string ParseCondition(string cond)
         {
             /* Explanation: inserting char will increase the length of the string by 2
              * to fix this add any 2 characters to the end of the string
@@ -46,7 +46,7 @@ namespace FormalSpecification
                 }
             }
 
-            cond = cond.Replace("\t\t", "");
+            return cond.Replace("\t\t", "");
         }
     }
 }
