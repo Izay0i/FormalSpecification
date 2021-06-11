@@ -29,6 +29,7 @@ namespace FormalSpecification
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +43,7 @@ namespace FormalSpecification
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.rtbInput = new System.Windows.Forms.RichTextBox();
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
@@ -54,7 +56,8 @@ namespace FormalSpecification
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveExeFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.bCompile = new System.Windows.Forms.Button();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.cbHLText = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -87,38 +90,38 @@ namespace FormalSpecification
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(100, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(100, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -161,6 +164,11 @@ namespace FormalSpecification
             this.openToolStripButton.Text = "&Open";
             this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // saveToolStripButton
             // 
             this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -175,9 +183,9 @@ namespace FormalSpecification
             // 
             this.rtbInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.rtbInput.Location = new System.Drawing.Point(12, 104);
+            this.rtbInput.Location = new System.Drawing.Point(12, 127);
             this.rtbInput.Name = "rtbInput";
-            this.rtbInput.Size = new System.Drawing.Size(351, 445);
+            this.rtbInput.Size = new System.Drawing.Size(351, 422);
             this.rtbInput.TabIndex = 2;
             this.rtbInput.Text = "";
             this.rtbInput.TextChanged += new System.EventHandler(this.rtbInput_TextChanged);
@@ -255,7 +263,7 @@ namespace FormalSpecification
             // 
             // bCompile
             // 
-            this.bCompile.Location = new System.Drawing.Point(236, 76);
+            this.bCompile.Location = new System.Drawing.Point(236, 98);
             this.bCompile.Name = "bCompile";
             this.bCompile.Size = new System.Drawing.Size(127, 23);
             this.bCompile.TabIndex = 9;
@@ -263,16 +271,25 @@ namespace FormalSpecification
             this.bCompile.UseVisualStyleBackColor = true;
             this.bCompile.Click += new System.EventHandler(this.bCompile_Click);
             // 
-            // toolStripSeparator3
+            // cbHLText
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.cbHLText.AutoSize = true;
+            this.cbHLText.Checked = true;
+            this.cbHLText.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbHLText.Location = new System.Drawing.Point(12, 104);
+            this.cbHLText.Name = "cbHLText";
+            this.cbHLText.Size = new System.Drawing.Size(143, 17);
+            this.cbHLText.TabIndex = 10;
+            this.cbHLText.Text = "Disable input highlighting";
+            this.toolTip1.SetToolTip(this.cbHLText, "Important if you want to type in your own custom specification");
+            this.cbHLText.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.cbHLText);
             this.Controls.Add(this.bCompile);
             this.Controls.Add(this.bBuildSolution);
             this.Controls.Add(this.tbExeFileName);
@@ -323,6 +340,8 @@ namespace FormalSpecification
         private System.Windows.Forms.SaveFileDialog saveExeFileDialog;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.Button bCompile;
+        private System.Windows.Forms.CheckBox cbHLText;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

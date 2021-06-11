@@ -137,7 +137,8 @@ namespace FormalSpecification
 
         private void ResetTextBoxes()
         {
-            rtbInput.Text = rtbOutput.Text = String.Empty;
+            rtbInput.Clear();
+            rtbOutput.Clear();
         }
 
         private void OpenFile()
@@ -241,6 +242,73 @@ namespace FormalSpecification
             }
         }
 
+        private void HighLightInput(string line)
+        {
+            string[] tokens = Regex.Split(line, @"([. \\t{}():])");
+            foreach (string token in tokens)
+            {
+                rtbInput.SelectionColor = Color.Black;
+
+                switch (token)
+                {
+                    case "R":
+                    case "N":
+                    case "Z":
+                    case "B":
+                    case "char*":
+                        rtbInput.SelectionColor = Color.Red;
+                        break;
+                    case "pre":
+                    case "post":
+                        rtbInput.SelectionColor = Color.Blue;
+                        break;
+                    case "&&":
+                    case "||":
+                        rtbInput.SelectionColor = Color.Orange;
+                        break;
+                }
+
+                rtbInput.SelectedText = token;
+            }
+
+            rtbInput.SelectedText = "\n";
+        }
+
+        private void HighLightOutput(string line)
+        {
+            string[] tokens = Regex.Split(line, @"([. \\t{}():])");
+            foreach (string token in tokens) {
+                rtbOutput.SelectionColor = Color.Black;
+
+                switch (token)
+                {
+                    case "using":
+                    case "namespace":
+                    case "public":
+                    case "class":
+                    case "static":
+                    case "void":
+                    case "double":
+                    case "uint":
+                    case "int":
+                    case "bool":
+                    case "string":
+                    case "if":
+                    case "else":
+                    case "return":
+                        rtbOutput.SelectionColor = Color.Blue;
+                        break;
+                    case "Console":
+                        rtbOutput.SelectionColor = Color.OrangeRed;
+                        break;
+                }
+
+                rtbOutput.SelectedText = token;
+            }
+
+            rtbOutput.SelectedText = "\n";
+        }
+
         public Form1()
         {
             InitializeComponent();
@@ -259,12 +327,27 @@ namespace FormalSpecification
 
         private void rtbInput_TextChanged(object sender, EventArgs e)
         {
-            //TODO: input syntax highlighting
+            if (!cbHLText.Checked)
+            {
+                string[] lines = rtbInput.Text.Split(new[] { "\n" }, StringSplitOptions.None);
+                rtbInput.Clear();
+
+                foreach (string line in lines)
+                {
+                    HighLightInput(line);
+                }
+            }
         }
 
         private void rtbOutput_TextChanged(object sender, EventArgs e)
         {
-            //TODO: output syntax highlighting
+            string[] lines = rtbOutput.Text.Split(new[] { "\n" }, StringSplitOptions.None);
+            rtbOutput.Clear();
+
+            foreach (string line in lines)
+            {
+                HighLightOutput(line);
+            }
         }
 
         private void newToolStripButton_Click(object sender, EventArgs e)
