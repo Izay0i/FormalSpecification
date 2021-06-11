@@ -30,7 +30,7 @@ namespace FormalSpecification
                 string[] elements = nameType.Split(new[] { " " }, StringSplitOptions.None);
 
                 body += String.Format("\n\t\t\tConsole.WriteLine(\"Nhap {0}:\");", elements[1]);
-                body += String.Format("\n\t\t\t{0} = ({1})Convert.ChangeType(Console.Readline(), typeof({1}));\n\t\t\t", elements[1], elements[0]);
+                body += String.Format("\n\t\t\t{0} = ({1})Convert.ChangeType(Console.ReadLine(), typeof({1}));\n\t\t\t", elements[1], elements[0]);
             }
 
             if (hasCond)

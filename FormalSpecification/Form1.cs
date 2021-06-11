@@ -22,6 +22,12 @@ namespace FormalSpecification
 
         private void ParseInput(string[] lines)
         {
+            if (rtbInput.Text.Split(new[] { "\n" }, StringSplitOptions.None).Length < 3)
+            {
+                MessageBox.Show("Invalid input");
+                return;
+            }
+
             nameTypeParser = new NameTypeParser(lines[0]);
             /* funcName
              * input
@@ -40,7 +46,7 @@ namespace FormalSpecification
             props = Util.AddPairs(props, postBodyParser.OutputResults());
 
             rtbOutput.Text = BuildOutput(
-                tbClassName.Text, 
+                tbClassName.Text.Length > 0 ? tbClassName.Text : "Program", 
                 props["input"], 
                 props["output"], 
                 props["funcName"], 
@@ -62,7 +68,7 @@ namespace FormalSpecification
             string input = String.Empty;
             input += $"\t\t{inp}";
             input += $"\t\t{output}";
-            input += $"\t\tpublic static void Nhap_{funcName}()\n\t\t{{\n";
+            input += $"\t\tpublic void Nhap_{funcName}()\n\t\t{{\n";
             input += $"\t\t\t{cond}";
             input += "\n\t\t}\n";
 
@@ -72,7 +78,7 @@ namespace FormalSpecification
         private string BuildOutputFunc(string outputCon, string funcName)
         {
             string output = String.Empty;
-            output += $"\t\tpublic static void Xuat_{funcName}()\n\t\t{{\n";
+            output += $"\t\tpublic void Xuat_{funcName}()\n\t\t{{\n";
             output += $"{outputCon}";
             output += "\n\t\t}\n";
 
@@ -82,20 +88,23 @@ namespace FormalSpecification
         private string BuildExecFunc(string body, string funcName)
         {
             string exec = String.Empty;
-            exec += $"\t\tpublic static void {funcName}()\n\t\t{{\n";
+            exec += $"\t\tpublic void {funcName}()\n\t\t{{\n";
             exec += body;
             exec += "\n\t\t}\n";
 
             return exec;
         }
 
-        private string BuildMainFunc(string funcName)
+        private string BuildMainFunc(string className, string funcName)
         {
+            char objName = className.ToLower()[0];
+
             string main = String.Empty;
             main += "\t\tpublic static void Main(string[] args)\n\t\t{\n";
-            main += $"\t\t\tNhap_{funcName}();\n";
-            main += $"\t\t\t{funcName}();\n";
-            main += $"\t\t\tXuat_{funcName}();";
+            main += $"\t\t\t{className} {objName} = new {className}();\n";
+            main += $"\t\t\t{objName}.Nhap_{funcName}();\n";
+            main += $"\t\t\t{objName}.{funcName}();\n";
+            main += $"\t\t\t{objName}.Xuat_{funcName}();";
             main += "\n\t\t}\n";
 
             return main;
@@ -117,7 +126,7 @@ namespace FormalSpecification
             result += BuildInputFunc(input, output, funcName, cond);
             result += BuildOutputFunc(outputCon, funcName);
             result += BuildExecFunc(body, funcName);
-            result += BuildMainFunc(funcName);
+            result += BuildMainFunc(className, funcName);
             result += "\t}\n";
             result += "}";
 
@@ -141,13 +150,65 @@ namespace FormalSpecification
             }
         }
 
+        private void SaveToFile()
+        {
+            if (rtbInput.Text.Length == 0)
+            {
+                MessageBox.Show("Cannot save empty input to file");
+                return;
+            }
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveFileDialog.FileName;
+                string filePath = Path.GetFullPath(fileName);
+                if (!File.Exists(filePath))
+                {
+                    using (StreamWriter sw = File.CreateText(filePath))
+                    {
+                        sw.Write(rtbInput.Text);
+                    }
+                }
+                else
+                {
+                    File.WriteAllText(fileName, rtbInput.Text);
+                }
+
+                MessageBox.Show("File successfully created/overwritten");
+            }
+        }
+
+        private void SaveToExeFile()
+        {
+            if (rtbOutput.Text.Length == 0)
+            {
+                MessageBox.Show("Cannot save empty output to file");
+                return;
+            }
+
+            if (saveExeFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = saveExeFileDialog.FileName;
+                string filePath = Path.GetFullPath(fileName);
+                if (!File.Exists(filePath))
+                {
+                    using (StreamWriter sw = File.CreateText(filePath))
+                    {
+                        sw.Write(rtbOutput.Text);
+                    }
+                }
+                else
+                {
+                    File.WriteAllText(fileName, rtbOutput.Text);
+                }
+
+                MessageBox.Show("File successfully created/overwritten");
+            }
+        }
+
         public Form1()
         {
             InitializeComponent();
-
-            openFileDialog1.CheckFileExists = true;
-            openFileDialog1.CheckPathExists = true;
-            openFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
         }
 
         private void bBuildSolution_Click(object sender, EventArgs e)
@@ -158,12 +219,17 @@ namespace FormalSpecification
 
         private void rtbInput_TextChanged(object sender, EventArgs e)
         {
-            
+            //TODO: input syntax highlighting
         }
 
         private void rtbOutput_TextChanged(object sender, EventArgs e)
         {
+            //TODO: output syntax highlighting
+        }
 
+        private void newToolStripButton_Click(object sender, EventArgs e)
+        {
+            ResetTextBoxes();
         }
 
         private void openToolStripButton_Click(object sender, EventArgs e)
@@ -171,9 +237,9 @@ namespace FormalSpecification
             OpenFile();
         }
 
-        private void newToolStripButton_Click(object sender, EventArgs e)
+        private void saveToolStripButton_Click(object sender, EventArgs e)
         {
-            ResetTextBoxes();
+            SaveToFile();
         }
 
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -194,9 +260,19 @@ namespace FormalSpecification
             OpenFile();
         }
 
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveToFile();
+        }
+
+        private void saveExeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveToExeFile();
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Quit?", "Exit", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Quit?", "Exit Prompt", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 Application.Exit();
