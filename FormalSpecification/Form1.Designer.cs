@@ -36,7 +36,6 @@ namespace FormalSpecification
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveExeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +53,8 @@ namespace FormalSpecification
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.saveExeFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.bCompile = new System.Windows.Forms.Button();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -77,7 +78,6 @@ namespace FormalSpecification
             this.openToolStripMenuItem,
             this.toolStripSeparator1,
             this.saveToolStripMenuItem,
-            this.saveExeToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -110,14 +110,6 @@ namespace FormalSpecification
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
-            // saveExeToolStripMenuItem
-            // 
-            this.saveExeToolStripMenuItem.Enabled = false;
-            this.saveExeToolStripMenuItem.Name = "saveExeToolStripMenuItem";
-            this.saveExeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveExeToolStripMenuItem.Text = "Save Exe File";
-            this.saveExeToolStripMenuItem.Click += new System.EventHandler(this.saveExeToolStripMenuItem_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -141,6 +133,7 @@ namespace FormalSpecification
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripButton,
             this.openToolStripButton,
+            this.toolStripSeparator3,
             this.saveToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
@@ -260,11 +253,27 @@ namespace FormalSpecification
             // 
             this.saveExeFileDialog.Filter = "exe files (*.exe)|*.exe|All files (*.*)|*.*";
             // 
+            // bCompile
+            // 
+            this.bCompile.Location = new System.Drawing.Point(236, 76);
+            this.bCompile.Name = "bCompile";
+            this.bCompile.Size = new System.Drawing.Size(127, 23);
+            this.bCompile.TabIndex = 9;
+            this.bCompile.Text = "Compile";
+            this.bCompile.UseVisualStyleBackColor = true;
+            this.bCompile.Click += new System.EventHandler(this.bCompile_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.bCompile);
             this.Controls.Add(this.bBuildSolution);
             this.Controls.Add(this.tbExeFileName);
             this.Controls.Add(this.tbClassName);
@@ -311,8 +320,9 @@ namespace FormalSpecification
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.ToolStripMenuItem saveExeToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveExeFileDialog;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.Button bCompile;
     }
 }
 

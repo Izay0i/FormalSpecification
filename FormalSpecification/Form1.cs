@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -104,8 +105,9 @@ namespace FormalSpecification
             main += $"\t\t\t{className} {objName} = new {className}();\n";
             main += $"\t\t\t{objName}.Nhap_{funcName}();\n";
             main += $"\t\t\t{objName}.{funcName}();\n";
-            main += $"\t\t\t{objName}.Xuat_{funcName}();";
-            main += "\n\t\t}\n";
+            main += $"\t\t\t{objName}.Xuat_{funcName}();\n";
+            main += "\t\t\tConsole.ReadLine();\n";
+            main += "\t\t}\n";
 
             return main;
         }
@@ -178,31 +180,64 @@ namespace FormalSpecification
             }
         }
 
-        private void SaveToExeFile()
+        //https://stackoverflow.com/questions/58520440/how-do-i-programmatically-compile-a-c-sharp-windows-forms-app-from-a-richtextbox
+        private void CompileOutput()
         {
             if (rtbOutput.Text.Length == 0)
             {
-                MessageBox.Show("Cannot save empty output to file");
+                MessageBox.Show("Invalid output");
                 return;
             }
 
-            if (saveExeFileDialog.ShowDialog() == DialogResult.OK)
+            //located in the bin folder
+            string compiledOutput = tbExeFileName.Text;
+            string[] refAssemblies = { "System.dll", "System.Drawing.dll", "System.Windows.Forms.dll" };
+
+            CodeDomProvider _CodeCompiler = CodeDomProvider.CreateProvider("CSharp");
+            CompilerParameters _CompilerParameters = new CompilerParameters(refAssemblies, "");
+
+            _CompilerParameters.OutputAssembly = compiledOutput;
+            _CompilerParameters.GenerateExecutable = true;
+            _CompilerParameters.GenerateInMemory = false;
+            _CompilerParameters.WarningLevel = 3;
+            _CompilerParameters.TreatWarningsAsErrors = true;
+            _CompilerParameters.CompilerOptions = "/optimize /target:exe";//!! HERE IS THE SOLUTION !!
+
+            string _Errors = null;
+            try
             {
-                string fileName = saveExeFileDialog.FileName;
-                string filePath = Path.GetFullPath(fileName);
-                if (!File.Exists(filePath))
+                // Invoke compilation
+                CompilerResults _CompilerResults = null;
+                _CompilerResults = _CodeCompiler.CompileAssemblyFromSource(_CompilerParameters, rtbOutput.Text);
+
+                if (_CompilerResults.Errors.Count > 0)
                 {
-                    using (StreamWriter sw = File.CreateText(filePath))
+                    // Return compilation errors
+                    _Errors = "";
+                    foreach (CompilerError CompErr in _CompilerResults.Errors)
                     {
-                        sw.Write(rtbOutput.Text);
+                        _Errors += "Line number " + CompErr.Line +
+                        ", Error Number: " + CompErr.ErrorNumber +
+                        ", '" + CompErr.ErrorText + ";\r\n\r\n";
                     }
                 }
-                else
-                {
-                    File.WriteAllText(fileName, rtbOutput.Text);
-                }
-
-                MessageBox.Show("File successfully created/overwritten");
+            }
+            catch (Exception _Exception)
+            {
+                // Error occurred when trying to compile the code
+                _Errors = _Exception.Message;
+            }
+            
+            //AFTER WORK
+            if (_Errors == null)
+            {
+                // lets run the program
+                MessageBox.Show(compiledOutput + " compiled!");
+                System.Diagnostics.Process.Start(compiledOutput);
+            }
+            else
+            {
+                MessageBox.Show("Error occurred during compilation : \r\n" + _Errors);
             }
         }
 
@@ -215,6 +250,11 @@ namespace FormalSpecification
         {
             ParseInput(rtbInput.Lines);
             props.Clear();
+        }
+
+        private void bCompile_Click(object sender, EventArgs e)
+        {
+            CompileOutput();
         }
 
         private void rtbInput_TextChanged(object sender, EventArgs e)
@@ -263,11 +303,6 @@ namespace FormalSpecification
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveToFile();
-        }
-
-        private void saveExeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveToExeFile();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
